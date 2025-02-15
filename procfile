@@ -1,0 +1,2 @@
+web: gunicorn -w 4 -k uvicorn.workers.UvicornWorker vbuysdbs:app
+worker: celery -A vbuysdbs.celery worker --loglevel=info

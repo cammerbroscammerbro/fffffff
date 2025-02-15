@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front I - UI to Code</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .container {
+            width: 90%;
+            max-width: 900px;
+            text-align: center;
+            padding: 20px;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #fff;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #bbb;
+        }
+        .upload-section {
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px dashed #3a3a3a;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+        .editor {
+            display: flex;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            gap: 20px;
+        }
+        .file-structure {
+            width: 25%;
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 10px;
+            color: #aaa;
+        }
+        .code-display {
+            width: 75%;
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            color: #bbb;
+            font-family: "Courier New", monospace;
+        }
+        .buttons button {
+            background: #3a3a3a;
+            border: none;
+            padding: 10px 15px;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .chatbot-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #3a3a3a;
+            border: none;
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .chatbot {
+            display: none;
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            width: 250px;
+        }
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #3a3a3a;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .deploy-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ff4500;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <button class="home-btn" onclick="window.location.replace('dashboard.html')">🏠 Home</button>
+    <button class="deploy-btn" id="deploy-btn">🚀 Deploy</button>
+    <div class="container">
+        <header class="hero">
+            <h1>Turn Your UI Images into Code Instantly</h1>
+            <p>Upload an image, and our AI will generate the corresponding code for you.</p>
+        </header>
+        <div class="upload-section" id="upload-box">
+            <input type="file" accept="image/*" id="file-input" hidden>
+            <p>Drag & Drop or Click to Upload</p>
+        </div>
+        <div class="editor">
+            <aside class="file-structure">
+                <h3>File Structure</h3>
+                <div id="file-name">No file uploaded</div>
+            </aside>
+            <main class="code-display">
+                <pre id="code-output">// Generated code will appear here...</pre>
+                <div class="buttons">
+                    <button id="copy-btn">Copy</button>
+                    <button id="download-btn">Download</button>
+                </div>
+            </main>
+        </div>
+        <button class="chatbot-btn" id="chatbot-btn" title="Open Chatbot">💬</button>
+        <div class="chatbot" id="chatbot">
+            <h4>AI Assistant</h4>
+            <p>Ask about your generated code.</p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('chatbot-btn').addEventListener('click', () => {
+            const chatbot = document.getElementById('chatbot');
+            chatbot.style.display = chatbot.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.getElementById('upload-box').addEventListener('click', () => {
+            document.getElementById('file-input').click();
+        });
+
+        document.getElementById('file-input').addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('file-name').innerText = file.name;
+                document.getElementById('code-output').innerText = '// Code generated from ' + file.name;
+            }
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', () => {
+            const code = document.getElementById('code-output').innerText;
+            navigator.clipboard.writeText(code);
+            alert('Code copied to clipboard!');
+        });
+
+        document.getElementById('download-btn').addEventListener('click', () => {
+            const code = document.getElementById('code-output').innerText;
+            const blob = new Blob([code], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'generated_code.txt';
+            link.click();
+        });
+
+        document.getElementById('deploy-btn').addEventListener('click', () => {
+            alert('Deployment feature coming soon!');
+        });
+    </script>
+</body>
+</html>
